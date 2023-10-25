@@ -1,12 +1,13 @@
-CFLAGS =-g -O3
+COMMON_OBJECTS = tokenizer.o history.o main.o
+CFLAGS = -g -O3 -I../h
+CC = cc
 
 all: tokenizer
-
-tokenizer.o: history.h
+tokenizer.o: tokenizer.h
 history.o: tokenizer.h history.h
+main.o: tokenizer.h history.h
 
-tokenizer: tokenizer.o history.o
-	cc -o $@ $^ $(CFLAGS)
-
+tokenizer: ${COMMON_OBJECTS}
+	cc -v -o $@ $^ ${CFLAGS}
 clean:
 	rm -f *.o tokenizer
